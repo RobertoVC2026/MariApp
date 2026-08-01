@@ -139,12 +139,33 @@ const App = (() => {
   function dashPrevMonth() { Dashboard.prevMonth(); }
   function dashNextMonth() { Dashboard.nextMonth(); }
 
-  return { init, saveSetup, navigate, dashPrevMonth, dashNextMonth };
+  return { init, saveSetup, navigate, dashPrevMonth, dashNextMonth, currentView: () => currentView };
 })();
 
 // ============================================================
 // BOOT
 // ============================================================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  // Mostrar spinner mientras carga Supabase
+  const splash = document.getElementById('loading-splash');
+  if (splash) splash.classList.remove('hidden');
+
+  await Storage.init();
+
+  if (splash) splash.classList.add('hidden');
+
   App.init();
+
+  // Re-renderizar vista actual cuando otro dispositivo hace cambios
+  Storage.onUpdate(() => {
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+    const v = App.currentView();
+    if (v === 'dashboard')  Dashboard.render();
+    else if (v === 'overtime')   OvertimeModule.render();
+    else if (v === 'calendar')   CalendarModule.render();
+    else if (v === 'vacations')  VacationsModule.render();
+    else if (v === 'bonuses')    BonusesModule.render();
+    else if (v === 'payroll')    PayrollModule.render();
+    else if (v === 'history')    HistoryModule.render();
+  });
 });
