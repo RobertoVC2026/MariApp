@@ -65,6 +65,7 @@ const PayrollModule = (() => {
     // Render result
     document.getElementById('pr-base').textContent       = `S/ ${salary.toFixed(2)}`;
     document.getElementById('pr-hour-value').textContent = `S/ ${overtimeRate.toFixed(2)}`;
+    document.getElementById('pr-hour-value').closest('.payroll-line').style.display = 'none';
     document.getElementById('pr-ot-hours').textContent   = totalOtHours;
     document.getElementById('pr-ot-pay').textContent     = `S/ ${totalOtPay.toFixed(2)}`;
     document.getElementById('pr-total').textContent      = `S/ ${total.toFixed(2)}`;
@@ -123,7 +124,7 @@ const PayrollModule = (() => {
     const otDetail = otRecords.length
       ? otRecords.map(r => {
           const special = Holidays.specialDay(r.date);
-          const tag = special === 'holiday' ? ' (Feriado)' : special === 'sunday' ? ' (Domingo)' : '';
+          const tag = special === 'holiday' ? ' (Feriado)' : special === 'sunday' ? ' (Domingo) ' : '';
           const pay = OvertimeModule.calcOvertimePay(r.hours, r.date, config);
           const d = new Date(r.date + 'T12:00:00').toLocaleDateString('es-PE', { day: '2-digit', month: 'short' });
           return `<div class="report-row" style="padding:4px 0;font-size:12px">
@@ -140,7 +141,6 @@ const PayrollModule = (() => {
           <p>${monthLabel}</p>
         </div>
         <div class="report-row"><span>Sueldo base</span><span>S/ ${salary.toFixed(2)}</span></div>
-        <div class="report-row"><span>Valor hora extra</span><span>S/ ${overtimeRate.toFixed(2)}</span></div>
         <div class="report-row"><span>Horas extras (${totalOtHours}h)</span><span>S/ ${totalOtPay.toFixed(2)}</span></div>
         ${otDetail}
         ${bonusTotal > 0 ? `<div class="report-row"><span>Bonos</span><span>S/ ${bonusTotal.toFixed(2)}</span></div>` : ''}
