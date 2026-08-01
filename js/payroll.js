@@ -1,6 +1,6 @@
 /**
  * PAYROLL MODULE
- * Liquidación mensual: sueldo, horas extras, bonos, gratificación.
+ * Liquidacióm mensual: sueldo, horas extras, bonos, gratificación.
  */
 const PayrollModule = (() => {
 
@@ -18,7 +18,8 @@ const PayrollModule = (() => {
 
   function render() {
     document.getElementById('payroll-month-label').textContent = formatMonthLabel(currentYear, currentMonth);
-    document.getElementById('payroll-result').classList.add('hidden');
+    // Solo oculta el resultado si no hay cálculo reciente (evita que real-time lo oculte)
+    if (!lastResult) document.getElementById('payroll-result').classList.add('hidden');
 
     // Status bar
     const record = getPayrollRecord(currentYear, currentMonth);
@@ -42,9 +43,8 @@ const PayrollModule = (() => {
     const m = currentMonth;
 
     const salary      = parseFloat(config.salary);
-    const hoursWeek   = parseFloat(config.hoursPerWeek || 48);
-    const hoursMonth  = (hoursWeek * 52) / 12;
-    const hourValue   = salary / hoursMonth;
+    // Tarifa hora extra acordada: S/ 6.25 fija (configurable vía config.overtimeRate)
+    const overtimeRate = parseFloat(config.overtimeRate) || 6.25;
 
     // Horas extras
     const otRecords   = OvertimeModule.getRecords(y, m);
@@ -60,11 +60,11 @@ const PayrollModule = (() => {
 
     const total = salary + totalOtPay + bonusTotal + gratAmount;
 
-    lastResult = { y, m, salary, hourValue, totalOtHours, totalOtPay, bonusTotal, isGratMonth, gratAmount, total };
+    lastResult = { y, m, salary, overtimeRate, totalOtHours, totalOtPay, bonusTotal, isGratMonth, gratAmount, total };
 
     // Render result
     document.getElementById('pr-base').textContent       = `S/ ${salary.toFixed(2)}`;
-    document.getElementById('pr-hour-value').textContent = `S/ ${hourValue.toFixed(2)}`;
+    document.getElementById('pr-hour-value').textContent = `S/ ${overtimeRate.toFixed(2)}`;
     document.getElementById('pr-ot-hours').textContent   = totalOtHours;
     document.getElementById('pr-ot-pay').textContent     = `S/ ${totalOtPay.toFixed(2)}`;
     document.getElementById('pr-total').textContent      = `S/ ${total.toFixed(2)}`;
@@ -115,7 +115,7 @@ const PayrollModule = (() => {
   function shareReport() {
     if (!lastResult) { showToast('Calcula primero la remuneración'); return; }
     const config = Storage.get('config', {});
-    const { y, m, salary, hourValue, totalOtHours, totalOtPay, bonusTotal, isGratMonth, gratAmount, total } = lastResult;
+    const { y, m, salary, overtimeRate, totalOtHours, totalOtPay, bonusTotal, isGratMonth, gratAmount, total } = lastResult;
     const monthLabel = formatMonthLabel(y, m);
 
     // OT detail lines
@@ -140,7 +140,7 @@ const PayrollModule = (() => {
           <p>${monthLabel}</p>
         </div>
         <div class="report-row"><span>Sueldo base</span><span>S/ ${salary.toFixed(2)}</span></div>
-        <div class="report-row"><span>Valor por hora</span><span>S/ ${hourValue.toFixed(2)}</span></div>
+        <div class="report-row"><span>Valor hora extra</span><span>S/ ${overtimeRate.toFixed(2)}</span></div>
         <div class="report-row"><span>Horas extras (${totalOtHours}h)</span><span>S/ ${totalOtPay.toFixed(2)}</span></div>
         ${otDetail}
         ${bonusTotal > 0 ? `<div class="report-row"><span>Bonos</span><span>S/ ${bonusTotal.toFixed(2)}</span></div>` : ''}
