@@ -16,14 +16,14 @@
   <div id="setup-overlay" class="overlay hidden">
     <div class="modal setup-modal">
       <div class="modal-header">
-        <div class="app-logo">🏠</div>
-        <h2>Configuración inicial</h2>
+        <div class="app-logo">ð </div>
+        <h2>ConfiguraciÃ³n inicial</h2>
         <p>Ingresa los datos de la trabajadora para comenzar.</p>
       </div>
       <div class="modal-body">
         <div class="field-group">
           <label>Nombre completo</label>
-          <input type="text" id="setup-name" placeholder="Ej. María López" />
+          <input type="text" id="setup-name" placeholder="Ej. MarÃ­a LÃ³pez" />
         </div>
         <div class="field-group">
           <label>Fecha de inicio laboral</label>
@@ -35,7 +35,7 @@
         </div>
         <div class="field-row">
           <div class="field-group">
-            <label>Horas por día</label>
+            <label>Horas por dÃ­a</label>
             <input type="number" id="setup-hours-day" value="8" min="1" max="24" />
           </div>
           <div class="field-group">
@@ -44,16 +44,16 @@
           </div>
         </div>
         <div class="field-group">
-          <label>Vacaciones tomadas (días acumulados)</label>
+          <label>Vacaciones tomadas (dÃ­as acumulados)</label>
           <input type="number" id="setup-vacations-taken" value="0" min="0" />
         </div>
         <div class="field-group">
-          <label>Valor de gratificación (S/) <span class="hint">Por defecto igual al sueldo</span></label>
+          <label>Valor de gratificaciÃ³n (S/) <span class="hint">Por defecto igual al sueldo</span></label>
           <input type="number" id="setup-bonus-value" placeholder="Igual al sueldo" min="0" />
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn-primary btn-full" onclick="App.saveSetup()">Comenzar →</button>
+        <button class="btn-primary btn-full" onclick="App.saveSetup()">Comenzar â</button>
       </div>
     </div>
   </div>
@@ -65,12 +65,12 @@
     <nav id="sidebar">
       <div class="sidebar-top">
         <div class="app-brand">
-          <div class="app-logo">🏠</div>
+          <div class="app-logo">ð </div>
           <span>App Mari</span>
         </div>
         <div id="worker-card">
-          <p id="nav-worker-name">—</p>
-          <span id="nav-worker-seniority" class="badge">—</span>
+          <p id="nav-worker-name">â</p>
+          <span id="nav-worker-seniority" class="badge">â</span>
         </div>
       </div>
 
@@ -102,7 +102,7 @@
         <p class="nav-label">Reportes</p>
         <a class="nav-item" data-view="payroll" onclick="App.navigate('payroll')">
           <i data-lucide="receipt"></i>
-          Liquidación
+          LiquidaciÃ³n
         </a>
         <a class="nav-item" data-view="history" onclick="App.navigate('history')">
           <i data-lucide="history"></i>
@@ -113,7 +113,7 @@
       <div class="nav-section nav-bottom">
         <a class="nav-item" data-view="settings" onclick="App.navigate('settings')">
           <i data-lucide="settings"></i>
-          Configuración
+          ConfiguraciÃ³n
         </a>
       </div>
     </nav>
@@ -150,9 +150,9 @@
         <div class="view-header">
           <h1>Dashboard</h1>
           <div id="month-selector-dash">
-            <button class="icon-btn" onclick="App.dashPrevMonth()">‹</button>
-            <span id="dash-month-label">—</span>
-            <button class="icon-btn" onclick="App.dashNextMonth()">›</button>
+            <button class="icon-btn" onclick="App.dashPrevMonth()">â¹</button>
+            <span id="dash-month-label">â</span>
+            <button class="icon-btn" onclick="App.dashNextMonth()">âº</button>
           </div>
         </div>
 
@@ -164,38 +164,38 @@
           </div>
           <div class="stat-card">
             <div class="stat-icon"><i data-lucide="trending-up"></i></div>
-            <p class="stat-label">Horas extras este año</p>
+            <p class="stat-label">Horas extras este aÃ±o</p>
             <p class="stat-value" id="stat-overtime-year">0 h</p>
           </div>
           <div class="stat-card">
             <div class="stat-icon"><i data-lucide="banknote"></i></div>
-            <p class="stat-label">Total pagado este año</p>
+            <p class="stat-label">Total pagado este aÃ±o</p>
             <p class="stat-value" id="stat-total-year">S/ 0</p>
           </div>
           <div class="stat-card">
             <div class="stat-icon"><i data-lucide="umbrella"></i></div>
             <p class="stat-label">Vacaciones pendientes</p>
-            <p class="stat-value" id="stat-vacations-pending">0 días</p>
+            <p class="stat-value" id="stat-vacations-pending">0 dÃ­as</p>
           </div>
           <div class="stat-card">
             <div class="stat-icon"><i data-lucide="award"></i></div>
-            <p class="stat-label">Antigüedad</p>
-            <p class="stat-value" id="stat-seniority">—</p>
+            <p class="stat-label">AntigÃ¼edad</p>
+            <p class="stat-value" id="stat-seniority">â</p>
           </div>
           <div class="stat-card">
             <div class="stat-icon"><i data-lucide="gift"></i></div>
-            <p class="stat-label">Próxima gratificación</p>
-            <p class="stat-value" id="stat-next-bonus">—</p>
+            <p class="stat-label">PrÃ³xima gratificaciÃ³n</p>
+            <p class="stat-value" id="stat-next-bonus">â</p>
           </div>
         </div>
 
         <div class="chart-section">
-          <h3>Horas extras — últimos 6 meses</h3>
+          <h3>Horas extras â Ãºltimos 6 meses</h3>
           <canvas id="chart-overtime" height="120"></canvas>
         </div>
 
         <div class="chart-section">
-          <h3>Pagos mensuales — este año</h3>
+          <h3>Pagos mensuales â este aÃ±o</h3>
           <canvas id="chart-payments" height="120"></canvas>
         </div>
       </section>
@@ -213,9 +213,9 @@
 
         <!-- Month nav -->
         <div class="month-nav">
-          <button class="icon-btn" onclick="OvertimeModule.prevMonth()">‹ Mes anterior</button>
-          <span id="overtime-month-label">—</span>
-          <button class="icon-btn" onclick="OvertimeModule.nextMonth()">Mes siguiente ›</button>
+          <button class="icon-btn" onclick="OvertimeModule.prevMonth()">â¹ Mes anterior</button>
+          <span id="overtime-month-label">â</span>
+          <button class="icon-btn" onclick="OvertimeModule.nextMonth()">Mes siguiente âº</button>
         </div>
       </section>
 
@@ -224,7 +224,7 @@
         <div class="modal">
           <div class="modal-header">
             <h2 id="overtime-form-title">Registrar horas extras</h2>
-            <button class="close-btn" onclick="OvertimeModule.closeForm()">×</button>
+            <button class="close-btn" onclick="OvertimeModule.closeForm()">Ã</button>
           </div>
           <div class="modal-body">
             <div class="field-group">
@@ -236,7 +236,7 @@
               <input type="number" id="ot-hours" placeholder="2" min="0.5" max="16" step="0.5" />
             </div>
             <div class="field-group">
-              <label>Observación <span class="hint">(opcional)</span></label>
+              <label>ObservaciÃ³n <span class="hint">(opcional)</span></label>
               <input type="text" id="ot-note" placeholder="Ej. Limpieza general" />
             </div>
             <div id="ot-day-badge" class="day-badge hidden"></div>
@@ -253,9 +253,9 @@
         <div class="view-header">
           <h1>Calendario</h1>
           <div class="month-nav inline">
-            <button class="icon-btn" onclick="CalendarModule.prevMonth()">‹</button>
-            <span id="calendar-month-label">—</span>
-            <button class="icon-btn" onclick="CalendarModule.nextMonth()">›</button>
+            <button class="icon-btn" onclick="CalendarModule.prevMonth()">â¹</button>
+            <span id="calendar-month-label">â</span>
+            <button class="icon-btn" onclick="CalendarModule.nextMonth()">âº</button>
           </div>
         </div>
         <div id="calendar-grid" class="calendar-grid"></div>
@@ -275,15 +275,15 @@
         <div class="stats-grid cols-3">
           <div class="stat-card">
             <p class="stat-label">Generadas</p>
-            <p class="stat-value" id="vac-generated">0 días</p>
+            <p class="stat-value" id="vac-generated">0 dÃ­as</p>
           </div>
           <div class="stat-card">
             <p class="stat-label">Tomadas</p>
-            <p class="stat-value" id="vac-taken">0 días</p>
+            <p class="stat-value" id="vac-taken">0 dÃ­as</p>
           </div>
           <div class="stat-card accent">
             <p class="stat-label">Pendientes</p>
-            <p class="stat-value" id="vac-pending">0 días</p>
+            <p class="stat-value" id="vac-pending">0 dÃ­as</p>
           </div>
         </div>
         <div id="vacations-list" class="record-list">
@@ -296,7 +296,7 @@
         <div class="modal">
           <div class="modal-header">
             <h2>Registrar vacaciones</h2>
-            <button class="close-btn" onclick="VacationsModule.closeForm()">×</button>
+            <button class="close-btn" onclick="VacationsModule.closeForm()">Ã</button>
           </div>
           <div class="modal-body">
             <div class="field-group">
@@ -326,9 +326,9 @@
           <p class="empty-state">Sin bonos registrados.</p>
         </div>
         <div class="month-nav">
-          <button class="icon-btn" onclick="BonusesModule.prevMonth()">‹ Mes anterior</button>
-          <span id="bonuses-month-label">—</span>
-          <button class="icon-btn" onclick="BonusesModule.nextMonth()">Mes siguiente ›</button>
+          <button class="icon-btn" onclick="BonusesModule.prevMonth()">â¹ Mes anterior</button>
+          <span id="bonuses-month-label">â</span>
+          <button class="icon-btn" onclick="BonusesModule.nextMonth()">Mes siguiente âº</button>
         </div>
       </section>
 
@@ -337,7 +337,7 @@
         <div class="modal">
           <div class="modal-header">
             <h2>Agregar bono</h2>
-            <button class="close-btn" onclick="BonusesModule.closeForm()">×</button>
+            <button class="close-btn" onclick="BonusesModule.closeForm()">Ã</button>
           </div>
           <div class="modal-body">
             <div class="field-group">
@@ -360,21 +360,21 @@
         </div>
       </div>
 
-      <!-- ===== LIQUIDACIÓN ===== -->
+      <!-- ===== LIQUIDACIÃN ===== -->
       <section id="view-payroll" class="view">
         <div class="view-header">
-          <h1>Liquidación</h1>
+          <h1>LiquidaciÃ³n</h1>
           <div class="month-nav inline">
-            <button class="icon-btn" onclick="PayrollModule.prevMonth()">‹</button>
-            <span id="payroll-month-label">—</span>
-            <button class="icon-btn" onclick="PayrollModule.nextMonth()">›</button>
+            <button class="icon-btn" onclick="PayrollModule.prevMonth()">â¹</button>
+            <span id="payroll-month-label">â</span>
+            <button class="icon-btn" onclick="PayrollModule.nextMonth()">âº</button>
           </div>
         </div>
 
         <div id="payroll-status-bar" class="status-bar"></div>
 
         <button class="btn-primary btn-full btn-lg" onclick="PayrollModule.calculate()">
-          Calcular remuneración
+          Calcular remuneraciÃ³n
         </button>
 
         <div id="payroll-result" class="payroll-result hidden">
@@ -398,7 +398,7 @@
           </div>
           <div id="pr-gratification-section" class="hidden">
             <div class="payroll-line highlight">
-              <span>Gratificación</span>
+              <span>GratificaciÃ³n</span>
               <span id="pr-gratification">S/ 0</span>
             </div>
           </div>
@@ -409,7 +409,7 @@
 
           <div class="payroll-actions">
             <button class="btn-success btn-full" onclick="PayrollModule.markPaid()">
-              ✓ Marcar como pagado
+              â Marcar como pagado
             </button>
             <button class="btn-ghost btn-full" onclick="PayrollModule.shareReport()">
               Compartir reporte
@@ -428,10 +428,10 @@
         </div>
       </section>
 
-      <!-- ===== CONFIGURACIÓN ===== -->
+      <!-- ===== CONFIGURACIÃN ===== -->
       <section id="view-settings" class="view">
         <div class="view-header">
-          <h1>Configuración</h1>
+          <h1>ConfiguraciÃ³n</h1>
         </div>
 
         <div class="settings-card">
@@ -450,7 +450,7 @@
           </div>
           <div class="field-row">
             <div class="field-group">
-              <label>Horas por día</label>
+              <label>Horas por dÃ­a</label>
               <input type="number" id="cfg-hours-day" min="1" max="24" />
             </div>
             <div class="field-group">
@@ -459,11 +459,11 @@
             </div>
           </div>
           <div class="field-group">
-            <label>Vacaciones tomadas iniciales (días)</label>
+            <label>Vacaciones tomadas iniciales (dÃ­as)</label>
             <input type="number" id="cfg-vacations-taken" min="0" />
           </div>
           <div class="field-group">
-            <label>Valor de gratificación (S/)</label>
+            <label>Valor de gratificaciÃ³n (S/)</label>
             <input type="number" id="cfg-bonus-value" min="0" />
           </div>
           <button class="btn-primary" onclick="SettingsModule.save()">Guardar cambios</button>
@@ -471,7 +471,7 @@
 
         <div class="settings-card">
           <h3>Feriados nacionales</h3>
-          <p class="hint-block">Estos son los feriados precargados del Perú. Puedes agregar, editar o eliminar.</p>
+          <p class="hint-block">Estos son los feriados precargados del PerÃº. Puedes agregar, editar o eliminar.</p>
           <div id="holidays-list" class="holidays-list"></div>
           <div class="field-row mt-8">
             <input type="date" id="new-holiday-date" />
@@ -483,7 +483,7 @@
         <div class="settings-card danger-zone">
           <h3>Zona de datos</h3>
           <button class="btn-danger" onclick="SettingsModule.exportData()">Exportar datos (JSON)</button>
-          <button class="btn-ghost" onclick="SettingsModule.resetApp()">Reiniciar aplicación</button>
+          <button class="btn-ghost" onclick="SettingsModule.resetApp()">Reiniciar aplicaciÃ³n</button>
         </div>
       </section>
 
@@ -498,18 +498,25 @@
     <div class="modal">
       <div class="modal-header">
         <h2>Reporte del mes</h2>
-        <button class="close-btn" onclick="document.getElementById('report-modal').classList.add('hidden')">×</button>
+        <button class="close-btn" onclick="document.getElementById('report-modal').classList.add('hidden')">Ã</button>
       </div>
       <div id="report-content" class="report-card"></div>
       <div class="modal-footer">
         <button class="btn-ghost" onclick="document.getElementById('report-modal').classList.add('hidden')">Cerrar</button>
-        <button class="btn-primary" onclick="PayrollModule.captureReport()">📷 Guardar imagen</button>
-        <button class="btn-primary" onclick="PayrollModule.shareNative()">↗ Compartir</button>
+        <button class="btn-primary" onclick="PayrollModule.captureReport()">ð· Guardar imagen</button>
+        <button class="btn-primary" onclick="PayrollModule.shareNative()">â Compartir</button>
       </div>
     </div>
   </div>
 
+    <!-- Loading splash (visible mientras conecta a Supabase) -->
+  <div id="loading-splash" style="position:fixed;inset:0;background:#f9f9f7;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:12px">
+    <div style="font-size:36px">🏠</div>
+    <p style="font-family:Inter,sans-serif;color:#6B6B67;font-size:14px">Cargando App Mari…</p>
+  </div>
+
   <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="js/storage.js"></script>
@@ -523,11 +530,11 @@
   <script src="js/settings.js"></script>
   <script src="js/app.js"></script>
   <script>
-    // Inicializar íconos Lucide después de que el DOM esté listo
+    // Inicializar Ã­conos Lucide despuÃ©s de que el DOM estÃ© listo
     document.addEventListener('DOMContentLoaded', function() {
       if (typeof lucide !== 'undefined') lucide.createIcons();
     });
-    // También re-renderizar cuando se navega entre vistas (por si los íconos son dinámicos)
+    // TambiÃ©n re-renderizar cuando se navega entre vistas (por si los Ã­conos son dinÃ¡micos)
     document.addEventListener('lucide-refresh', function() {
       if (typeof lucide !== 'undefined') lucide.createIcons();
     });
