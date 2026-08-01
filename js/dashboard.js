@@ -66,16 +66,20 @@ const Dashboard = (() => {
   }
 
   function renderCharts(y, m) {
-    // Last 6 months of overtime
-    const labels6 = [], dataOT = [], dataPay = [];
+    // Build up to 6 months and filter: only show months with data + current month
+    const all = [];
     for (let i = 5; i >= 0; i--) {
       let mo = m - i; let yr = y;
       if (mo < 1) { mo += 12; yr--; }
-      labels6.push(`${MONTH_SHORT[mo-1]} ${yr}`);
-      dataOT.push(OvertimeModule.getRecords(yr, mo).reduce((s, r) => s + r.hours, 0));
-      const pr = PayrollModule.getPayrollRecord(yr, mo);
-      dataPay.push(pr && pr.total ? pr.total : 0);
+      const ot  = OvertimeModule.getRecords(yr, mo).reduce((s, r) => s + r.hours, 0);
+      const pr  = PayrollModule.getPayrollRecord(yr, mo);
+      const pay = pr && pr.total ? pr.total : 0;
+      all.push({ label: `${MONTH_SHORT[mo-1]} ${yr}`, ot, pay, isCurrent: i === 0 });
     }
+    const filtered = all.filter(d => d.ot > 0 || d.pay > 0 || d.isCurrent);
+    const labels6 = filtered.map(d => d.label);
+    const dataOT  = filtered.map(d => d.ot);
+    const dataPay = filtered.map(d => d.pay);
 
     const ctx1 = document.getElementById('chart-overtime').getContext('2d');
     const ctx2 = document.getElementById('chart-payments').getContext('2d');
