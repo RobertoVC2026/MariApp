@@ -1,7 +1,7 @@
 /**
  * OVERTIME MODULE
  * Registro de horas extras con detección automática de feriados/domingos.
- * Cálculo según legislación peruana vigente.
+ * Cálculo según tarifa acordada (S/ 6.25/h normal, S/ 12.50/h domingos/feriados).
  */
 const OvertimeModule = (() => {
 
@@ -9,28 +9,22 @@ const OvertimeModule = (() => {
   let currentMonth = new Date().getMonth() + 1; // 1-based
   let editingId    = null;
 
-  // ---- Cálculo legal Perú ----
+  // ---- Cálculo de pago por horas extras ----
   /**
-   * Tasa de recargo según tipo de día:
-   * - Normal: primeras 2h = 25%, restantes = 35%
-   * - Domingo/Feriado: 100% del valor hora adicional (pago doble efectivo)
-   *   Según DS 007-2002-TR: se paga el día + 100% de recargo por cada hora
+   * Tarifa acordada fija:
+   * - Normal: S/ 6.25 por hora (configurable vía config.overtimeRate)
+   * - Domingo/Feriado: doble de la tarifa base (S/ 12.50 por hora)
    */
   function calcOvertimePay(hours, dateStr, config) {
-    const { salary, hoursPerWeek } = config;
-    const hoursPerMonth = (hoursPerWeek * 52) / 12; // ~208
-    const hourValue = salary / hoursPerMonth;
-
+    const BASE_RATE = (config && config.overtimeRate) ? parseFloat(config.overtimeRate) : 6.25;
     const special = Holidays.specialDay(dateStr);
 
     if (special) {
-      // Domingo o feriado: recargo del 100% sobre valor hora
-      return hours * hourValue * 2;
+      // Domingo o feriado: doble del valor por hora
+      return hours * BASE_RATE * 2;
     } else {
-      // Horas normales: primeras 2h al 125%, restantes al 135%
-      const first  = Math.min(hours, 2) * hourValue * 1.25;
-      const rest   = Math.max(0, hours - 2) * hourValue * 1.35;
-      return first + rest;
+      // Hora extra normal: tarifa acordada
+      return hours * BASE_RATE;
     }
   }
 
@@ -126,10 +120,10 @@ const OvertimeModule = (() => {
     const special = Holidays.specialDay(dateStr);
     if (special === 'holiday') {
       const name = Holidays.getName(dateStr);
-      badge.textContent = `📅 Feriado: ${name} — Se aplicará recargo del 100%`;
+      badge.textContent = `📅 Feriado: ${name} — Se pagará al doble (S/ 12.50/h)`;
       badge.className   = 'day-badge holiday';
     } else if (special === 'sunday') {
-      badge.textContent = '📅 Domingo — Se aplicará recargo del 100%';
+      badge.textContent = '📅 Domingo — Se pagará al doble (S/ 12.50/h)';
       badge.className   = 'day-badge sunday';
     } else {
       badge.className = 'day-badge hidden';
