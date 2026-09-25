@@ -1,0 +1,21 @@
+name: Keep Supabase Awake
+
+on:
+  schedule:
+    # Cada 3 dias a las 08:00 UTC (evita la auto-pausa de Supabase a los 7 dias de inactividad)
+    - cron: '0 8 */3 * *'
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST API
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpsaHpubWJyaHNjdGppZ2R0bm55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU1MzU4MjEsImV4cCI6MjEwMTExMTgyMX0.K1mSNibj94sQphi2zCXuBSIbEKyDTESmRQPtOXRd-PE" \
+            "https://zlhznmbrhsctjigdtnny.supabase.co/rest/v1/app_data?select=key&limit=1")
+          echo "Supabase respondio con status: $STATUS"
+          if [ "$STATUS" -ge 500 ]; then
+            echo "::warning::Supabase respondio con error $STATUS - revisar si el proyecto esta pausado en supabase.com/dashboard"
+          fi
