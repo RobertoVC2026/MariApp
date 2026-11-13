@@ -2,10 +2,8 @@ name: Keep Supabase Awake
 
 on:
   schedule:
-    # Cada 3 dias a las 08:00 UTC (evita la auto-pausa de Supabase a los 7 dias de inactividad)
-    - cron: '0 8 */3 * *'
-  workflow_dispatch: {}
-
+    # Todos los dias a las 08:17 UTC (hora fuera de pico, para evitar que un retraso de GitHub salte la ventana de 7 dias de Supabase)    - cron: '0 8 */3 * *'
+    - cron: '17 8 * * *'
 jobs:
   ping:
     runs-on: ubuntu-latest
